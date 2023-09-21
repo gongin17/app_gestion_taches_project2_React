@@ -4,9 +4,10 @@ import Search from "./search";
 import CreateTask from "./createTask";
 import { Tasks } from "./tasks";
 import Modal from "./modal";
+import Update from "./update";
 
 
-const Card = () => {
+const Home = () => {
   const [taskList, setTaskList] = useState([
     {
       id: "1353TETFH0",
@@ -67,7 +68,8 @@ const Card = () => {
   ]);
 
   const [showModal, setShowModal] = useState(false);
-
+  const [contentModal, setContentModal] = useState("");
+  const [taskData, setTaskData] = useState("");
   const [filter, setFilter] = useState("");
 
   const closeModal = () => setShowModal(false);
@@ -96,16 +98,36 @@ const Card = () => {
     return taskList;
   };
 
-  const searchItem = () => console.log("search");
+
+// verifier que les champs non vide
+  const areAllFieldsNotNull=(obj)=> {
+
+    for (const key in obj) {
+      if (obj[key] === null || obj[key] === "") {
+        return false;
+      }
+    }
+    return true;
+  
+  }
 
   const updateList = (e, updatedData) => {
+    
+    if(areAllFieldsNotNull(updatedData)){
     setTaskList((prevTaskList) =>
       prevTaskList.map((x) => (x.id === updatedData.id ? updatedData : x))
-    );
+    )}
   };
+
+
   const addItem = (e, newItem) => {
+
+    if(areAllFieldsNotNull(newItem)){
     setTaskList((prevTaskList) => [...prevTaskList, newItem]);
+    }
   };
+
+
 
   const deleteItem = (e, id) => {
     setTaskList((prevTaskList) => prevTaskList.filter((x) => x.id !== id));
@@ -114,41 +136,51 @@ const Card = () => {
   };
 
   return (
+   
+
     <div>
-      <div style={{ textAlign: "center" }}>
-        <h1 className="">Application de gestion de tâches</h1>{" "}
-      </div>
-
-
-      <div>
+        <div style={{ margin:"50px"}} >
+    <h1 >Gestion de tâches</h1>
+  </div>
+     
+     <div>
         <div>
           <Modal show={showModal} closeModal={closeModal}>
-            <CreateTask addItem={addItem}  closeModal={closeModal} />
+          { contentModal==="create" ? <CreateTask addItem={addItem}  closeModal={closeModal} /> : null}
+          { contentModal==="update" ? <Update taskData={taskData} handleUpdate={updateList}  closeModal={closeModal} /> : null}
           </Modal>
-          <div style={{display:"flex" ,justifyContent:"space-around"}}>
+         
+
+          <div>
             <div>
-            
-              <button className="card-button" onClick={() => setShowModal(true)}>
-              Créer une tâche 
-               
+              <button className="card-button" 
+              onClick={() => {
+              setShowModal(true)
+              setContentModal("create")
+              }}>
+              Créer une tâche  
               </button>
+                <Search  filterNames={filterNames} filterStates={filterStates}/>   
             </div>
-            <Search
-              handleSearch={searchItem}
-              filterNames={filterNames}
-              filterStates={filterStates}
-            />
+
           </div>
         </div>
       </div>
 
-      <div className="main-section">
+      <div className="" >
               
-          <Tasks namesList={namesHandler()} show={() => setShowModal(true)} handleDelete={deleteItem} />
+          <Tasks  
+          namesList={namesHandler()} 
+          show={() => {
+            setShowModal(true) 
+            setContentModal("update") 
+          }}
+          setTaskData={setTaskData}
+          handleDelete={deleteItem} />
          
       </div>
     </div>
   );
 };
 
-export default Card;
+export default Home;

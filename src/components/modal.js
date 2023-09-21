@@ -20,9 +20,9 @@ const Modal = ({show ,closeModal ,children}) => {
 
 {children}
  
-    <button  className=""  onClick={closeModal} >
-         <FaWindowClose style={{fontSize:'30px', color:'black' }}  />
-        
+    <button  className='card-button'  onClick={closeModal} >
+         <FaWindowClose style={{fontSize:'23px' }}  />
+          Annuler
        </button>
 
 </div>

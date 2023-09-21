@@ -2,9 +2,9 @@ import React from 'react'
 import Delete from './delete';
 import Update from './update';
 
-export const Tasks = ({namesList ,show,handleDelete}) => {
+export const Tasks = ({namesList ,show,handleDelete,setTaskData}) => {
   return (
-    <div>  {namesList?.map((task) => {
+    <div  className="">  {namesList?.map((task) => {
         return (
           <div className="card" key={task.id}>
             <h2 className="card-title">Nom :{task.nom}</h2>
@@ -16,12 +16,14 @@ export const Tasks = ({namesList ,show,handleDelete}) => {
             <div>
                <Delete id={task.id} handleDelete={handleDelete} />
               </div>
-              <button className="card-button" onClick={show}>
-                Mettre à jour
-            </button>
-            
+              <div>
+                <button className='card-button' onClick={()=>{
+                  setTaskData(task)
+                  show()
+                }}>mettre à jour
+                </button>
+               </div>
             </div>
-             
           </div>
         );
       })}</div>

@@ -2,29 +2,31 @@ import { useState  } from 'react';
 import { FaPen } from 'react-icons/fa';
 
 
-const Update = ({id ,handleUpdate}) => {
+const Update = ({taskData ,handleUpdate ,closeModal}) => {
      
-  const [nom, setNom] = useState();
-  const [priorite, setPriorite] = useState();
-  const [ordre, setOrdre] = useState();
-  const [etat, setEtat] = useState();
+  const [nom, setNom] = useState("");
+  const [priorite, setPriorite] = useState("");
+  const [ordre, setOrdre] = useState("");
+  const [etat, setEtat] = useState("");
+  const [description, setDescription] = useState("");
+ 
+     
+  console.log("task data before" ,taskData)
 
 
-  const updatedData={id,nom , priorite, ordre ,etat}
-
-
-    
+  const handleSubmite=(e)=>{
+    e.preventDefault()
+    handleUpdate(e,{...taskData,nom ,description,priorite, ordre,etat})
+    closeModal() 
+   }
 
 
   return (
-   
-
-      <>
-      
+    <>
      <div>
       <input
             type="text"
-            className="form-control"
+            className="text-input"
             onChange={(e) => {
               setNom(e.target.value);
             }}
@@ -33,36 +35,47 @@ const Update = ({id ,handleUpdate}) => {
      
      <div><input
             type="text"
-            className="form-control"
+            className="text-input"
             onChange={(e) => {
               setPriorite(e.target.value);
             }}
-            placeholder="title"
+            placeholder="Priorité"
           /></div>
 
-<div><input
+     <div><input
             type="text"
-            className="form-control"
+            className="text-input"
             onChange={(e) => {
               setOrdre(e.target.value);
             }}
-            placeholder="title"
+            placeholder="Ordre"
           /></div>
 
 <div><input
             type="text"
-            className="form-control"
+            className="text-input"
             onChange={(e) => {
               setEtat(e.target.value);
             }}
-            placeholder="title"
+            placeholder="Etat"
           /></div>
-     <button onClick={(e,)=>handleUpdate(e,updatedData)}
-    ><FaPen style={{fontSize:'19px', color:'white' ,background: '#467e8d '}}  /></button>
-    </>  
-        
         
 
+        <div><input
+            type="text"
+            className="text-input"
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+            placeholder="Descrition"
+          /></div>
+
+     <button className='card-button' onClick={e => handleSubmite(e)}
+    ><FaPen style={{fontSize:'25px'}}  /> Mettre à jour
+    </button>
+    </>  
+        
+      
     
   )
 }

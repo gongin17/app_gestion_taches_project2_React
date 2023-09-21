@@ -3,7 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import '../App.css'
 
 
-const Search = ({handleSearch,filterNames}) => {
+const Search = ({filterNames}) => {
 
   const [filter, setFilter] = useState("");
    
@@ -28,7 +28,7 @@ const Search = ({handleSearch,filterNames}) => {
 <input
    className="search-box"
   type="text"
-  placeholder="filter by name"
+  placeholder="filtrer par nom"
   value={filter}
   onChange={filterHandler}
  ></input>
